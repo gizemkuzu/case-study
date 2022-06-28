@@ -1,0 +1,406 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;500;600;700;800&display=swap");
+
+body {
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+:root {
+    --dark-color: #400e03;
+    --pink-color: #ed1c24;
+    --soft-pink-color: #fde4e5;
+    --gray-color: #434448;
+    --white-color: #fff;
+}
+
+@mixin media($screensize) {
+    @if ($screensize == xlarge) {
+        @media (max-width: 1536px) {
+            @content;
+        }
+    }
+
+    @if ($screensize == large) {
+        @media (max-width: 1440px) {
+            @content;
+        }
+    }
+
+    @if ($screensize == ipad) {
+        @media (max-width: 1024px) {
+            @content;
+        }
+    }
+
+    @if ($screensize == medium) {
+        @media (max-width: 768px) {
+            @content;
+        }
+    }
+
+    @if ($screensize == small) {
+        @media (max-width: 600px) {
+            @content;
+        }
+    }
+
+    @if ($screensize == smallheight) {
+        @media (max-height: 780px) {
+            //ekranın mak 700px le kadar olan kısımları kontrol ediyoruz.
+            @content;
+        }
+    }
+}
+
+header {
+    background: var(--white-color);
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        @include media(medium) {
+            justify-content: center;
+        }
+
+        .mobile-bar {
+            display: none;
+
+            @include media(large) {
+                display: block;
+                position: absolute;
+                left: 3rem;
+                top: 21px;
+            }
+
+            &.open {
+                i {
+                    &:first-child {
+                        display: none;
+                    }
+                    &:last-child {
+                        display: block;
+                    }
+                }
+            }
+
+            i {
+                font-size: 2.6rem;
+                color: var(--white-color);
+
+                &:last-child {
+                    display: none;
+                }
+            }
+        }
+
+        .logo {
+            a {
+                img {
+                    @include media(large) {
+                        height: 3rem;
+                    }
+                }
+            }
+        }
+
+        .menu {
+            @include media(medium) {
+                position: absolute;
+                left: -100%;
+                bottom: 0;
+                transition: 500ms all;
+                background: rgba(0, 0, 0, 0.6);
+                // 100vh = ekran boyutu, calc = hesaplama
+                height: calc(var(--vh, 1vh) * 100);
+                top: 70px;
+                width: 24rem;
+
+                &.active {
+                    left: 0;
+                    transition: 500ms all;
+                }
+            }
+
+            ul {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 1rem;
+
+                @include media(medium) {
+                    height: 100%;
+                    flex-direction: column;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                li {
+                    padding: 0 0.8rem;
+                    position: relative;
+
+                    @include media(large) {
+                        margin-bottom: 1.8rem;
+                    }
+
+                    &:last-child {
+                        a {
+                            &::after {
+                                display: none;
+                                @include media(large) {
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+
+                    a {
+                        text-decoration: none;
+                        color: var(--dark-color);
+                        text-transform: uppercase;
+
+                        @include media(large) {
+                            font-size: 15px;
+                            font-weight: 500;
+                        }
+
+                        &:hover {
+                            color: var(--main-color);
+                            cursor: pointer;
+                        }
+
+                        &.active {
+                            color: var(--main-color);
+                            @include media(large) {
+                                color: var(--blue-color);
+                            }
+                        }
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            width: 1px;
+                            height: 1.2rem;
+                            background-color: var(--white-color);
+                            right: -1%;
+                            top: 2px;
+
+                            @include media(large) {
+                                right: unset;
+                                top: unset;
+                                height: 2px;
+                                width: 2.5rem;
+                                bottom: -0.5rem;
+                                left: 50%;
+                                transform: translate(-50%);
+                                background-color: var(--main-color);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+section {
+    &.banner {
+        img {
+            width: 100%;
+            max-height: calc(100vh - 7rem);
+            object-fit: cover;
+
+            @include media(smallheight) {
+                max-height: unset; //ne yazıyorsa sıfırla & auto da yazabiliriz.
+                min-height: unset; // ne yazıyorsa sıfırla & auto da yazabiliriz.
+                height: auto; // yükseklik otomatik olsun.
+            }
+            @include media(large) {
+                min-height: auto;
+            }
+            @include media(small) {
+                min-height: 55vh;
+            }
+
+            @include media(xsmall) {
+                min-height: 45vh;
+            }
+        }
+
+        .text {
+            transform: translate(-50%);
+            position: absolute;
+            top: 36%;
+            left: 50%;
+
+            h1 {
+                color: var(--white-color);
+                font-weight: 600;
+                text-align: center;
+            }
+
+            button {
+                border: none;
+                padding: 10px;
+                width: 100%;
+                background-color: inherit;
+
+                a {
+                    font-weight: 600;
+                    background-color: var(--white-color);
+                    padding: 10px 15px;
+                    color: var(--pink-color);
+                }
+            }
+        }
+    }
+
+    &.slider {
+        background-color: #f9f6f6;
+        width: 100%;
+        height: 100%;
+        padding-bottom: 40px;
+        h1 {
+            text-align: center;
+            padding-top: 78px;
+        }
+        .swiper {
+            width: 100%;
+            height: 100%;
+            padding: 48px 0;
+
+            .swiper-slide {
+                text-align: center;
+                font-size: 18px;
+                background: var(--white-color);
+                height: 235px;
+                border: 2px solid #43444830;
+                width: 376px;
+                padding: 16px;
+
+                h6 {
+                    text-align: left;
+                    font-size: 21px;
+                }
+
+                p {
+                    font-size: 16px;
+                    text-align: left;
+                    padding-bottom: 20px;
+                }
+
+                .buttons {
+                    a {
+                        background-color: var(--soft-pink-color);
+                        padding: 10px 38px;
+                        color: var(--pink-color);
+
+                        &:last-child {
+                            background-color: var(--pink-color);
+                            color: var(--soft-pink-color);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.end{
+        background-color: var(--gray-color);
+        padding: 30px 10px;
+
+        .title{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+
+            h2{
+                color: var(--white-color);
+                @include media(small){
+                    font-size: 18px;
+                }
+            }
+
+            button {
+                border: none;
+                padding: 10px;
+                background-color: inherit;
+                @include media(small){
+                    font-size: 12px;
+                }
+                a {
+                    font-weight: 600;
+                    background-color: var(--white-color);
+                    padding: 10px 15px;
+                    color: var(--pink-color);
+                }
+            }
+        }
+
+        .content{
+            width: 100%;
+            position: relative;
+
+            &::after{
+                content: '';
+                background-image: url(../img/Vector.png);
+                position: absolute;
+                width: 200px;
+                height: 200px;
+                background-repeat: no-repeat;
+                z-index: 1;
+                left: 50%;
+                transform: translate(-50%);
+                top: 44%;
+            }
+        }
+    }
+}
+
+.swiper-pagination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.swiper-pagination-bullet{
+    background-color: var(--pink-color);
+    opacity: 1;
+}
+.swiper-pagination-bullet-active{
+    width: 14px;
+    height: 14px;
+}
+.swiper-button-next, .swiper-button-prev{
+    height: auto !important;
+    background-color: var(--dark-color);
+    padding: 10px 15px;
+    border-radius: 4px;
+    width: auto !important;
+}
+.swiper-button-next:after, .swiper-button-prev:after{
+    font-size: 22px;
+    color:#fff;
+}
